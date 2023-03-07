@@ -8,5 +8,8 @@ repositories {
 
 dependencies {
     testImplementation 'org.testng:testng:7.7.1'
+}
 
+test { //this is the gradle task to be executed
+    useTestNG()
 }
