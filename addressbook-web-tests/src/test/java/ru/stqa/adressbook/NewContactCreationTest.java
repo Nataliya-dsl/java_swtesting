@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import java.time.Duration;
-public class NewContactCreationTestTest {
+public class NewContactCreationTest {
   private WebDriver wd;
   @BeforeMethod
   public void setUp() {
