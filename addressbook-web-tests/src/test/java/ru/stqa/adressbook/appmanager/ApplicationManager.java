@@ -1,7 +1,5 @@
 package ru.stqa.adressbook.appmanager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -30,16 +28,6 @@ public class ApplicationManager {
     public void stop() {
         wd.quit();
     }
-
-    public boolean isAlertPresent(By by) {
-        try {
-            wd.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
-    }
-
 
     public GroupHelper getGroupHelper() {
         return groupHelper;
