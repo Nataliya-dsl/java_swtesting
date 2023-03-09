@@ -7,11 +7,12 @@ import ru.stqa.adressbook.model.NewContactDatas;
 public class NewContactHelper extends HelperBase {
 
     public NewContactHelper(WebDriver wd) {
-        super(wd);;
+        super(wd);
+        ;
     }
 
     public void submitContactCreation() {
-      click(By.xpath("(//input[@name=\'submit\'])[2]"));
+        click(By.xpath("(//input[@name=\'submit\'])[2]"));
     }
 
     public void fillContactData(NewContactDatas dataGroup) {
@@ -26,6 +27,6 @@ public class NewContactHelper extends HelperBase {
     }
 
     public void addNewContact() {
-      click(By.linkText("add new"));
+        click(By.linkText("add new"));
     }
 }

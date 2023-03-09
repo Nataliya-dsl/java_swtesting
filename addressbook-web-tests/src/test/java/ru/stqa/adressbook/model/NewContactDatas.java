@@ -38,12 +38,15 @@ public class NewContactDatas {
     public String getNickname() {
         return nickname;
     }
+
     public String getCompany() {
         return company;
     }
+
     public String getAddress() {
         return address;
     }
+
     public String getMobile() {
         return mobile;
     }

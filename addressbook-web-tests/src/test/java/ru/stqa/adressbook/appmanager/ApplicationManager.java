@@ -31,13 +31,13 @@ public class ApplicationManager {
         wd.quit();
     }
 
-    public boolean isAlertPresent(By by){
-      try {
-        wd.switchTo().alert();
-        return true;
-      } catch (NoAlertPresentException e) {
-        return false;
-      }
+    public boolean isAlertPresent(By by) {
+        try {
+            wd.switchTo().alert();
+            return true;
+        } catch (NoAlertPresentException e) {
+            return false;
+        }
     }
 
 
