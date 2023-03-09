@@ -4,11 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.adressbook.model.NewContactDatas;
 
-public class NewContactHelper extends HelperBase {
+public class ContactHelper extends HelperBase {
 
-    public NewContactHelper(WebDriver wd) {
+    public ContactHelper(WebDriver wd) {
         super(wd);
-        ;
     }
 
     public void submitContactCreation() {
@@ -28,5 +27,29 @@ public class NewContactHelper extends HelperBase {
 
     public void addNewContact() {
         click(By.linkText("add new"));
+    }
+
+    public void selectContact() {
+        click(By.name("selected[]"));
+    }
+
+    public void deleteContact() {
+        click(By.xpath("//input[@value='Delete']"));
+    }
+
+    public void confirmationDeleteContact() {
+        wd.switchTo().alert().accept();
+    }
+
+    public void returnHomePage() {
+        click(By.linkText("home page"));
+    }
+
+    public void editContact() {
+        click(By.xpath("//img[@alt='Edit']"));
+    }
+
+    public void updateContactData() {
+        click(By.name("update"));
     }
 }

@@ -7,14 +7,13 @@ public class NavigationHelper extends HelperBase {
 
     public NavigationHelper(WebDriver wd) {
         super(wd);
-        ;
     }
 
     public void gotoGroupPage() {
         click(By.linkText("groups"));
     }
 
-    public void returnHomePage() {
+    public void gotoHomePage() {
         click(By.linkText("home"));
     }
 }
