@@ -30,11 +30,9 @@ public class NewContactCreationTest {
   public void testCreationNewContact() {
 
     addNewContact();
-    fillContactFullName(new GroupDataContact("Petr", "Pavlovich", "Petrov", "Pepe"));
-    fillCompanyMainInform("TitleExample", "TestCompany", "Country1,City1, Street1, 1-1-1");
-    fillPhoneNumber(new GroupDataPhones("+832098928", "+123456789", "+987654321", "+9078563412"));
-    fillEmail("emailtest1@mail.ts", "emailtest2@mail.ts", "emailtest3@mail.ts");
-    fillHomePage("www.homepagetest.ru");
+    fillContactData(new NewContactDatas("Petr", "Pavlovich", "Smirnov", "testuser",
+            "TestCompany", "Country1,City1, Street1, 1-1-1",
+            "+45123456789", "+987654321"));
     submitContactCreation();
     returnHomePage();
   }
@@ -47,41 +45,7 @@ public class NewContactCreationTest {
     wd.findElement(By.xpath("(//input[@name=\'submit\'])[2]")).click();
   }
 
-  private void fillHomePage(String homepage) {
-    wd.findElement(By.name("homepage")).click();
-    wd.findElement(By.name("homepage")).sendKeys(homepage);
-  }
-
-  private void fillEmail(String email1, String email2, String email3) {
-    wd.findElement(By.name("email")).click();
-    wd.findElement(By.name("email")).sendKeys(email1);
-    wd.findElement(By.name("email2")).click();
-    wd.findElement(By.name("email2")).sendKeys(email2);
-    wd.findElement(By.name("email3")).click();
-    wd.findElement(By.name("email3")).sendKeys(email3);
-  }
-
-  private void fillPhoneNumber(GroupDataPhones groupDataPhones) {
-    wd.findElement(By.name("home")).click();
-    wd.findElement(By.name("home")).sendKeys(groupDataPhones.getHome());
-    wd.findElement(By.name("mobile")).click();
-    wd.findElement(By.name("mobile")).sendKeys(groupDataPhones.getMobile());
-    wd.findElement(By.name("work")).click();
-    wd.findElement(By.name("work")).sendKeys(groupDataPhones.getWork());
-    wd.findElement(By.name("fax")).click();
-    wd.findElement(By.name("fax")).sendKeys(groupDataPhones.getFax());
-  }
-
-  private void fillCompanyMainInform(String title, String company, String address) {
-    wd.findElement(By.name("title")).click();
-    wd.findElement(By.name("title")).sendKeys(title);
-    wd.findElement(By.name("company")).click();
-    wd.findElement(By.name("company")).sendKeys(company);
-    wd.findElement(By.name("address")).click();
-    wd.findElement(By.name("address")).sendKeys(address);
-  }
-
-  private void fillContactFullName(GroupDataContact dataGroup) {
+  private void fillContactData(NewContactDatas dataGroup) {
     wd.findElement(By.name("firstname")).click();
     wd.findElement(By.name("firstname")).sendKeys(dataGroup.getFirstname());
     wd.findElement(By.name("middlename")).click();
@@ -90,6 +54,14 @@ public class NewContactCreationTest {
     wd.findElement(By.name("lastname")).sendKeys(dataGroup.getLastname());
     wd.findElement(By.name("nickname")).click();
     wd.findElement(By.name("nickname")).sendKeys(dataGroup.getNickname());
+    wd.findElement(By.name("company")).click();
+    wd.findElement(By.name("company")).sendKeys(dataGroup.getCompany());
+    wd.findElement(By.name("address")).click();
+    wd.findElement(By.name("address")).sendKeys(dataGroup.getAddress());
+    wd.findElement(By.name("mobile")).click();
+    wd.findElement(By.name("mobile")).sendKeys(dataGroup.getMobile());
+    wd.findElement(By.name("work")).click();
+    wd.findElement(By.name("work")).sendKeys(dataGroup.getWork());
   }
 
   private void addNewContact() {
