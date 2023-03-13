@@ -27,7 +27,7 @@ public class ApplicationManager {
             wd = new ChromeDriver(new ChromeOptions().addArguments("--remote-allow-origins=*"));
         } else if (Browser.SAFARI.browserName().equals(browser)) {
             wd = new SafariDriver();
-        } else {
+        } else if (Browser.FIREFOX.browserName().equals(browser)){
             wd = new FirefoxDriver();
         }
 
