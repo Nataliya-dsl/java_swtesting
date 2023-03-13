@@ -1,7 +1,7 @@
 package ru.stqa.adressbook.tests;
 
 import org.testng.annotations.Test;
-import ru.stqa.adressbook.model.NewContactDatas;
+import ru.stqa.adressbook.model.ContactDetails;
 
 public class ContactModificationTests extends TestBase {
 
@@ -9,7 +9,7 @@ public class ContactModificationTests extends TestBase {
     public void testContactModification() {
         app.getNavigationHelper().gotoHomePage();
         app.getContactHelper().editContact();
-        app.getContactHelper().fillContactData(new NewContactDatas("Test", "Test", "Test", "testuser",
+        app.getContactHelper().fillContactDetails(new ContactDetails("Test", "Test", "Test", "testuser",
                 "TestCompany", "Country, City, Street, 0",
                 "+45123456789", "+987654321"));
         app.getContactHelper().updateContactData();

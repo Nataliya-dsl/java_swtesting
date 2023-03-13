@@ -1,6 +1,6 @@
 package ru.stqa.adressbook.model;
 
-public class NewContactDatas {
+public class ContactDetails {
     private final String firstname;
     private final String middlename;
     private final String lastname;
@@ -8,10 +8,10 @@ public class NewContactDatas {
     private final String company;
     private final String address;
     private final String mobile;
-    private final String work;
+    private final String workphone;
 
 
-    public NewContactDatas(String firstname, String middlename, String lastname, String nickname, String company, String address, String mobile, String work) {
+    public ContactDetails(String firstname, String middlename, String lastname, String nickname, String company, String address, String mobile, String workphone) {
         this.firstname = firstname;
         this.middlename = middlename;
         this.lastname = lastname;
@@ -19,7 +19,7 @@ public class NewContactDatas {
         this.company = company;
         this.address = address;
         this.mobile = mobile;
-        this.work = work;
+        this.workphone = workphone;
 
     }
 
@@ -51,8 +51,8 @@ public class NewContactDatas {
         return mobile;
     }
 
-    public String getWork() {
-        return work;
+    public String getWorkPhone() {
+        return workphone;
     }
 
 }
