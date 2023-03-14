@@ -11,7 +11,7 @@ public class ContactModificationTests extends TestBase {
         app.getContactHelper().editContact();
         app.getContactHelper().fillContactDetails(new ContactDetails("Test", "Test", "Test", "testuser",
                 "TestCompany", "Country, City, Street, 0",
-                "+45123456789", "+987654321"));
+                "+45123456789", "+987654321", null), false);
         app.getContactHelper().updateContactData();
         app.getContactHelper().returnHomePage();
     }

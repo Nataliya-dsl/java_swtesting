@@ -32,7 +32,7 @@ public class ApplicationManager {
         }
 
 
-        wd.manage().timeouts().implicitlyWait(Duration.ofDays((20)));
+        //wd.manage().timeouts().implicitlyWait(Duration.ofDays((20)));
         wd.get("http://localhost/addressbook/index.php");
         groupHelper = new GroupHelper(wd);
         navigationHelper = new NavigationHelper(wd);
