@@ -21,7 +21,6 @@ public class ContactDetails {
         this.address = address;
         this.mobile = mobile;
         this.workphone = workphone;
-
         this.group = group;
     }
 
