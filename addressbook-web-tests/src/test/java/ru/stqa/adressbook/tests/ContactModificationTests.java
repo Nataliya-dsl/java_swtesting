@@ -1,5 +1,6 @@
 package ru.stqa.adressbook.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.adressbook.model.ContactDetails;
 
@@ -8,6 +9,7 @@ public class ContactModificationTests extends TestBase {
     @Test
     public void testContactModification() {
         app.getNavigationHelper().gotoHomePage();
+        int before = app.getContactHelper().getContactCount();
         if (! app.getContactHelper().isThereAContact()) {
             app.getContactHelper().createContact(new ContactDetails("Petr", "Pavlovich", "Smirnov", "testuser",
                     "TestCompany", "Country1,City1, Street1, 1-1-1",
@@ -19,5 +21,8 @@ public class ContactModificationTests extends TestBase {
                 "+45123456789", "+987654321", null), false);
         app.getContactHelper().updateContactData();
         app.getContactHelper().returnHomePage();
+        int after = app.getContactHelper().getContactCount();
+        Assert.assertEquals(after, before);
+
     }
 }

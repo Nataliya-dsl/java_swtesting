@@ -8,6 +8,7 @@ import org.openqa.selenium.remote.Browser;
 import org.openqa.selenium.safari.SafariDriver;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
 
@@ -31,8 +32,7 @@ public class ApplicationManager {
             wd = new FirefoxDriver();
         }
 
-
-        //wd.manage().timeouts().implicitlyWait(Duration.ofDays((20)));
+        wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/index.php");
         groupHelper = new GroupHelper(wd);
         navigationHelper = new NavigationHelper(wd);
