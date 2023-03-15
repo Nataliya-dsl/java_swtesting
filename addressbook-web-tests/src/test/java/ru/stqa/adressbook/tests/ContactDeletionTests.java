@@ -16,7 +16,7 @@ public class ContactDeletionTests extends TestBase {
                     "TestCompany", "Country1,City1, Street1, 1-1-1",
                     "+45123456789", "+987654321", "test1"));
         }
-        app.getContactHelper().selectContact();
+        app.getContactHelper().selectContact(before - 1);
         app.getContactHelper().deleteContact();
         app.getContactHelper().confirmationDeleteContact();
         app.getNavigationHelper().gotoHomePage();

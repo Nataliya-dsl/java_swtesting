@@ -15,11 +15,11 @@ public class ContactModificationTests extends TestBase {
                     "TestCompany", "Country1,City1, Street1, 1-1-1",
                     "+45123456789", "+987654321", "test1"));
         }
-        app.getContactHelper().editContact();
+        app.getContactHelper().editContact(before - 1);
         app.getContactHelper().fillContactDetails(new ContactDetails("Test", "Test", "Test", "testuser",
                 "TestCompany", "Country, City, Street, 0",
                 "+45123456789", "+987654321", null), false);
-        app.getContactHelper().updateContactData();
+        app.getContactHelper().submitContactModification();
         app.getContactHelper().returnHomePage();
         int after = app.getContactHelper().getContactCount();
         Assert.assertEquals(after, before);
