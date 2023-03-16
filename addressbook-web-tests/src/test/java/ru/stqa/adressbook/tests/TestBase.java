@@ -1,21 +1,21 @@
 package ru.stqa.adressbook.tests;
 
 import org.openqa.selenium.remote.Browser;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 import ru.stqa.adressbook.appmanager.ApplicationManager;
 
 public class TestBase {
 
-    protected final ApplicationManager app = new ApplicationManager(Browser.CHROME.browserName());
+    protected static final ApplicationManager app = new ApplicationManager(Browser.CHROME.browserName());
 
-    @BeforeMethod
+    @BeforeSuite
     public void setUp() throws Exception {
         app.init();
 
     }
 
-    @AfterMethod
+    @AfterSuite
     public void tearDown() {
         app.stop();
     }

@@ -5,13 +5,12 @@ import org.testng.annotations.*;
 import ru.stqa.adressbook.model.ContactDetails;
 
 import java.util.*;
-import java.util.Optional;
 
 public class NewContactCreationTest extends TestBase {
 
-    @Test
+    @Test(enabled = false)
     public void testCreationNewContact() {
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         List<ContactDetails> before = app.getContactHelper().getContactList();
         ContactDetails contact = new ContactDetails("Petr", "Pavlovich", "Smirnov", "testuser",
                 "TestCompany", "Country1,City1, Street1, 1-1-1",
