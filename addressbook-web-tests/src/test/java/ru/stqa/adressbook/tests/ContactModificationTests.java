@@ -1,39 +1,42 @@
 package ru.stqa.adressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.adressbook.model.ContactDetails;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 public class ContactModificationTests extends TestBase {
 
-    @Test(enabled = false)
-    public void testContactModification() {
-        app.goTo().gotoHomePage();
-        if (! app.getContactHelper().isThereAContact()) {
-            app.getContactHelper().createContact(new ContactDetails("Petr", "Pavlovich", "Smirnov", "testuser",
-                    "TestCompany", "Country1,City1, Street1, 1-1-1",
-                    "+45123456789", "+987654321", "test1"));
+    @BeforeMethod
+    public void ensurePreconditions() {
+        app.goTo().homePage();
+        if (app.contact().list().size() == 0) {
+            app.contact().create(new ContactDetails().withFirstname("Petr").withMiddlename("Pavlovich").withLastname("Smirnov")
+                    .withNickname("testuser").withCompany("TestCompany").withAddress("Country1,City1, Street1, 1-1-1").withMobile("+45123456789")
+                    .withWorkphone("+987654321").withGroup("test1"));
         }
+    }
 
-        List<ContactDetails> before = app.getContactHelper().getContactList();
-        app.getContactHelper().editContact(before.size() - 1);
-        ContactDetails contact = new ContactDetails(before.get(before.size() - 1).getId(), "Test", "Test", "Test", "testuser",
-                "TestCompany", "Country, City, Street, 0",
-                "+45123456789", "+987654321", null);
-        app.getContactHelper().fillContactDetails(contact,false);
-        app.getContactHelper().submitContactModification();
-        app.getContactHelper().returnHomePage();
-        List<ContactDetails> after = app.getContactHelper().getContactList();
+
+    @Test
+    public void testContactModification() {
+        Set<ContactDetails> before = app.contact().all();
+        ContactDetails modifiedContact = before.iterator().next();
+        ContactDetails contact = new ContactDetails().withId(modifiedContact.getId()).withFirstname("Test").withMiddlename("Test")
+                .withLastname("Test").withNickname("testuser").withCompany("TestCompany").withAddress("Country, City, Street, 0")
+                .withMobile("+45123456789").withWorkphone("+987654321").withGroup(null);
+
+        app.contact().modify(contact);
+        Set<ContactDetails> after = app.contact().all();
         Assert.assertEquals(after.size(), before.size());
 
-        before.remove(before.size() - 1);
+        before.remove(modifiedContact);
         before.add(contact);
-        Comparator<? super ContactDetails> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-        before.sort(byId);
-        after.sort(byId);
         Assert.assertEquals(before, after);
     }
+
 }

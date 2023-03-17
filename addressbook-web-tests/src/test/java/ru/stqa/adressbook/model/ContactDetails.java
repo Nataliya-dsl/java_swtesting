@@ -5,45 +5,78 @@ import java.util.Objects;
 
 public class ContactDetails {
 
-    private int id;
-    private final String firstname;
-    private final String middlename;
-    private final String lastname;
-    private final String nickname;
-    private final String company;
-    private final String address;
-    private final String mobile;
-    private final String workphone;
+    private int id = Integer.MAX_VALUE;
+    private String firstname;
+    private String middlename;
+    private String lastname;
+    private String nickname;
+    private String company;
+    private String address;
+    private String mobile;
+    private String workphone;
     private String group;
 
-    public ContactDetails(String firstname, String middlename, String lastname, String nickname, String company, String address, String mobile, String workphone, String group) {
-        this.id = Integer.MAX_VALUE;
-        this.firstname = firstname;
-        this.middlename = middlename;
-        this.lastname = lastname;
-        this.nickname = nickname;
-        this.company = company;
-        this.address = address;
-        this.mobile = mobile;
-        this.workphone = workphone;
-        this.group = group;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactDetails that = (ContactDetails) o;
+        return id == that.id && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname);
     }
 
-    public ContactDetails(int id, String firstname, String middlename, String lastname, String nickname, String company, String address, String mobile, String workphone, String group) {
-        this.id = id;
-        this.firstname = firstname;
-        this.middlename = middlename;
-        this.lastname = lastname;
-        this.nickname = nickname;
-        this.company = company;
-        this.address = address;
-        this.mobile = mobile;
-        this.workphone = workphone;
-        this.group = group;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstname, lastname);
     }
 
-    public void setId(int id) {
+    public ContactDetails withId(int id) {
         this.id = id;
+        return this;
+    }
+
+    public ContactDetails withFirstname(String firstname) {
+        this.firstname = firstname;
+        return this;
+    }
+
+    public ContactDetails withMiddlename(String middlename) {
+        this.middlename = middlename;
+        return this;
+    }
+
+    public ContactDetails withLastname(String lastname) {
+        this.lastname = lastname;
+        return this;
+    }
+
+    public ContactDetails withNickname(String nickname) {
+        this.nickname = nickname;
+        return this;
+    }
+
+    public ContactDetails withCompany(String company) {
+        this.company = company;
+        return this;
+    }
+
+    public ContactDetails withAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public ContactDetails withMobile(String mobile) {
+        this.mobile = mobile;
+        return this;
+    }
+
+    public ContactDetails withWorkphone(String workphone) {
+        this.workphone = workphone;
+        return this;
+    }
+
+    public ContactDetails withGroup(String group) {
+        this.group = group;
+        return this;
     }
 
     public String getFirstname() {
@@ -93,19 +126,6 @@ public class ContactDetails {
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ContactDetails that = (ContactDetails) o;
-        return Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstname, lastname);
     }
 
 
