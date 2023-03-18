@@ -1,6 +1,5 @@
 package ru.stqa.adressbook.model;
 
-import java.util.Collections;
 import java.util.Objects;
 
 public class ContactDetails {
