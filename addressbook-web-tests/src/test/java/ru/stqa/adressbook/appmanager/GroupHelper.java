@@ -6,9 +6,7 @@ import org.openqa.selenium.WebElement;
 import ru.stqa.adressbook.model.GroupData;
 import ru.stqa.adressbook.model.Groups;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class GroupHelper extends HelperBase {
 
@@ -79,7 +77,7 @@ public class GroupHelper extends HelperBase {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public int getGroupCount() {
+    public int count() {
         return wd.findElements(By.name("selected[]")).size();
     }
 

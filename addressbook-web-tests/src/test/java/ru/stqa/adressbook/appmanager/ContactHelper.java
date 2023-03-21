@@ -8,9 +8,7 @@ import org.testng.Assert;
 import ru.stqa.adressbook.model.ContactDetails;
 import ru.stqa.adressbook.model.Contacts;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -93,7 +91,7 @@ public class ContactHelper extends HelperBase {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public int getContactCount() {
+    public int count() {
         return wd.findElements(By.name("selected[]")).size();
     }
 
