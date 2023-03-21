@@ -15,6 +15,16 @@ public class ContactDetails {
     private String workphone;
     private String group;
     private String homephone;
+    private String allPhones;
+
+    public String getAllPhones() {
+        return allPhones;
+    }
+
+    public ContactDetails withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
+        return this;
+    }
 
 
     public ContactDetails withFirstname(String firstname) {
