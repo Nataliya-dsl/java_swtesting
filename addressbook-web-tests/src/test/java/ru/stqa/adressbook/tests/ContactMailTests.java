@@ -4,6 +4,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.adressbook.model.ContactDetails;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -42,4 +43,11 @@ public class ContactMailTests extends TestBase {
     public static String cleaned(String phone) {
         return phone.replaceAll("\\s", "").replaceAll("[-()]", "");
     }
+
+    @Test
+    public void testCurrentDir() {
+        File currentdir = new File(".");
+        System.out.println("Path=" + (currentdir.getAbsolutePath()));
+    }
+
 }

@@ -5,6 +5,9 @@ import ru.stqa.adressbook.model.ContactDetails;
 import ru.stqa.adressbook.model.Contacts;
 import ru.stqa.adressbook.model.GroupData;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -31,9 +34,10 @@ public class NewContactCreationTest extends TestBase {
     @Test
     public void testCreationNewContact() {
         Contacts before = app.contact().all();
+        File photo = new File("src/test/java/resources/tt.png");
         ContactDetails contact = new ContactDetails().withFirstname("Petr").withMiddlename("Pavlovich").withLastname("Smirnov")
-                .withNickname("testuser").withCompany("TestCompany").withAddress("Country1,City1, Street1, 1-1-1")
-                .withHomePhone("111111").withMobile("+45123456789").withWorkphone("+987654321").withGroup(TEST_GROUP);
+                .withCompany("TestCompany").withAddress("Country1,City1, Street1, 1-1-1")
+                .withHomePhone("111111").withMobile("+45123456789").withPhoto(photo).withGroup(TEST_GROUP);
         app.contact().create(contact);
         assertThat(app.contact().count(), equalTo(before.size() + 1));
         Contacts after = app.contact().all();
@@ -50,4 +54,6 @@ public class NewContactCreationTest extends TestBase {
         Contacts after = app.contact().all();
         assertThat(after, equalTo(before));
     }
+
+
 }
