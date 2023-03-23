@@ -20,6 +20,7 @@ public class ContactDetails {
     private String email2;
     private String email3;
     private String allEmails;
+    private String homesecondaryphone;
 
 
     public String getAllPhones() {
@@ -99,6 +100,10 @@ public class ContactDetails {
         return this;
     }
 
+    public ContactDetails withHomesecondaryphone(String homesecondaryphone) {
+        this.homesecondaryphone = homesecondaryphone;
+        return this;
+    }
     public ContactDetails withGroup(String group) {
         this.group = group;
         return this;
@@ -142,6 +147,7 @@ public class ContactDetails {
 
     public String getEmail3() { return email3; }
 
+    public String getHomesecondaryphone() { return homesecondaryphone; }
     public String getGroup() {
         return group;
     }

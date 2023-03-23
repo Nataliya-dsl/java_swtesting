@@ -28,7 +28,7 @@ public class ContactMailTests extends TestBase {
         app.goTo().homePage();
         ContactDetails contact = app.contact().all().iterator().next();
         ContactDetails contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
-        assertThat(cleaned(contact.getAddress()), equalTo(cleaned(contactInfoFromEditForm.getAddress())));
+        assertThat(contact.getAddress(), equalTo(contactInfoFromEditForm.getAddress()));
         assertThat(contact.getAllEmails(), equalTo(mergeEmails(contactInfoFromEditForm)));
 
     }
@@ -36,7 +36,6 @@ public class ContactMailTests extends TestBase {
     private String mergeEmails(ContactDetails contact) {
         return Arrays.asList(contact.getEmail(), contact.getEmail2(), contact.getEmail3())
                 .stream().filter((s) -> ! s.equals(""))
-                .map(ContactPhoneTests::cleaned)
                 .collect(Collectors.joining("\n"));
     }
 
