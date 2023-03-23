@@ -5,26 +5,35 @@ import ru.stqa.adressbook.model.ContactDetails;
 import ru.stqa.adressbook.model.Contacts;
 import ru.stqa.adressbook.model.GroupData;
 
+import java.util.Optional;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 
 public class NewContactCreationTest extends TestBase {
 
+    public static final String TEST_GROUP = "test1";
+
     @BeforeMethod
     public void ensurePreconditions() {
         app.goTo().groupPage();
-        if (app.group().all().size() == 0) {
-            app.group().create(new GroupData().withName("test1"));
-        }
+        Optional<GroupData> group = app.group().all().stream()
+                .filter(g -> TEST_GROUP.equals(g.getName()))
+                .findFirst();
+
+        if (group.isEmpty())
+            app.group().create(new GroupData().withName(TEST_GROUP));
+
         app.goTo().homePage();
     }
+
     @Test
     public void testCreationNewContact() {
         Contacts before = app.contact().all();
         ContactDetails contact = new ContactDetails().withFirstname("Petr").withMiddlename("Pavlovich").withLastname("Smirnov")
                 .withNickname("testuser").withCompany("TestCompany").withAddress("Country1,City1, Street1, 1-1-1")
-                .withHomePhone("111111").withMobile("+45123456789").withWorkphone("+987654321").withGroup("test1");
+                .withHomePhone("111111").withMobile("+45123456789").withWorkphone("+987654321").withGroup(TEST_GROUP);
         app.contact().create(contact);
         assertThat(app.contact().count(), equalTo(before.size() + 1));
         Contacts after = app.contact().all();
