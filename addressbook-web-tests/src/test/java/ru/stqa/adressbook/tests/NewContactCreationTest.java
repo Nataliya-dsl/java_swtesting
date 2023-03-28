@@ -1,18 +1,23 @@
 package ru.stqa.adressbook.tests;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.*;
 import ru.stqa.adressbook.model.ContactDetails;
 import ru.stqa.adressbook.model.Contacts;
 import ru.stqa.adressbook.model.GroupData;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.*;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class NewContactCreationTest extends TestBase {
 
@@ -30,14 +35,42 @@ public class NewContactCreationTest extends TestBase {
 
         app.goTo().homePage();
     }
+    @DataProvider
+    public Iterator<Object[]> validContactsFromXml() throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/java/resources/contacts.xml")));
+        String xml = "";
+        String line = reader.readLine();
+        while (line != null) {
+            xml += line;
+            line = reader.readLine();
+        }
+        XStream xstream = new XStream();
+        xstream.processAnnotations(ContactDetails.class);
+        xstream.allowTypes(new Class[]{ContactDetails.class});
+        xstream.processAnnotations(ContactDetails.class);
+        List<ContactDetails> contacts = (List<ContactDetails>) xstream.fromXML(xml);
+        return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+    }
+    @DataProvider(name = "validContactsFromJson")
+    public Iterator<Object[]> validContactsFromJson() throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/java/resources/contacts.json")));
+        String json = "";
+        String line = reader.readLine();
+        while (line != null) {
+            json += line;
+            line = reader.readLine();
+        }
+        Gson gson = new Gson();
+        List<ContactDetails> contacts = gson.fromJson(json, new TypeToken<List<ContactDetails>>(){}.getType());
+        return contacts.stream()
+            .map((g) -> new Object[] {g})
+            .collect(Collectors.toList()).iterator();
+    }
 
-    @Test
-    public void testCreationNewContact() {
+    @Test(dataProvider = "validContactsFromXml")
+    public void testCreationNewContact(ContactDetails contact) {
         Contacts before = app.contact().all();
-        File photo = new File("src/test/java/resources/tt.png");
-        ContactDetails contact = new ContactDetails().withFirstname("Petr").withMiddlename("Pavlovich").withLastname("Smirnov")
-                .withCompany("TestCompany").withAddress("Country1,City1, Street1, 1-1-1")
-                .withHomePhone("111111").withMobile("+45123456789").withPhoto(photo).withGroup(TEST_GROUP);
+        //File photo = new File("src/test/java/resources/tt.png");
         app.contact().create(contact);
         assertThat(app.contact().count(), equalTo(before.size() + 1));
         Contacts after = app.contact().all();

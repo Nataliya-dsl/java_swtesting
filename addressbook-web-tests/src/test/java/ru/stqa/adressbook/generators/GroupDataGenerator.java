@@ -70,7 +70,6 @@ public class GroupDataGenerator {
         Writer writer = new FileWriter(file);
         writer.write(xml);
         writer.close();
-
     }
 
     private void saveAsCsv(List<GroupData> groups, File file) throws IOException {

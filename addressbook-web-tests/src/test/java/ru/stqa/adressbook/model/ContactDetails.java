@@ -1,18 +1,29 @@
 package ru.stqa.adressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.io.File;
 import java.util.Objects;
 
+@XStreamAlias("contact")
 public class ContactDetails {
-
+    @XStreamOmitField
     private int id = Integer.MAX_VALUE;
+    @Expose
     private String firstname;
     private String middlename;
+    @Expose
     private String lastname;
+    @Expose
     private String nickname;
     private String company;
+    @Expose
     private String address;
+    @Expose
     private String mobile;
+    @Expose
     private String workphone;
     private String group;
     private String homephone;

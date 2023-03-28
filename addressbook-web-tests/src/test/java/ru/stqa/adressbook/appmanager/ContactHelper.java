@@ -68,7 +68,7 @@ public class ContactHelper extends HelperBase {
 
     public void create(ContactDetails contact) {
         addNewContact();
-        fillContactDetails(contact, true);
+        fillContactDetails(contact, false);
         submitContactCreation();
         contactCache = null;
         returnHomePage();

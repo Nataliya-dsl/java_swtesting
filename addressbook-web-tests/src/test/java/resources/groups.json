@@ -13,5 +13,10 @@
     "name": "test 2;",
     "header": "header\n2;",
     "footer": "footer\n2;"
+  },
+  {
+    "name": "test 3;",
+    "header": "header\n3;",
+    "footer": "footer\n3;"
   }
 ]
