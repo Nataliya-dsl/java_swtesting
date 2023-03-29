@@ -1,38 +1,26 @@
 [
   {
-    "firstname": "FirstName 0;",
-    "lastname": "LastName\n0;",
-    "nickname": "testuser\n0;",
-    "address": "Address\n0;",
-    "mobile": "1111\n0;",
-    "workphone": "2222\n0;",
-    "group": "test 1;"
+    "firstname": "FirstName 0",
+    "lastname": "LastName 0",
+    "address": "Address 0",
+    "mobile": "1111 0",
+    "workphone": "2222 0",
+    "group": "test 1"
   },
   {
-    "firstname": "FirstName 1;",
-    "lastname": "LastName\n1;",
-    "nickname": "testuser\n1;",
-    "address": "Address\n1;",
-    "mobile": "1111\n1;",
-    "workphone": "2222\n1;",
-    "group": "test 1;"
+    "firstname": "FirstName 1",
+    "lastname": "LastName 1",
+    "address": "Address 1",
+    "mobile": "1111 1",
+    "workphone": "2222 1",
+    "group": "test 1"
   },
   {
-    "firstname": "FirstName 2;",
-    "lastname": "LastName\n2;",
-    "nickname": "testuser\n2;",
-    "address": "Address\n2;",
-    "mobile": "1111\n2;",
-    "workphone": "2222\n2;",
-    "group": "test 1;"
-  },
-  {
-    "firstname": "FirstName 3;",
-    "lastname": "LastName\n3;",
-    "nickname": "testuser\n3;",
-    "address": "Address\n3;",
-    "mobile": "1111\n3;",
-    "workphone": "2222\n3;",
-    "group": "test 1;"
+    "firstname": "FirstName 2",
+    "lastname": "LastName 2",
+    "address": "Address 2",
+    "mobile": "1111 2",
+    "workphone": "2222 2",
+    "group": "test 1"
   }
 ]

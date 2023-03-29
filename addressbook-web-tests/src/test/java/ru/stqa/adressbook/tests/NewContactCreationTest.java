@@ -1,6 +1,7 @@
 package ru.stqa.adressbook.tests;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.*;
@@ -60,14 +61,15 @@ public class NewContactCreationTest extends TestBase {
             json += line;
             line = reader.readLine();
         }
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        //Gson gson = new Gson();
         List<ContactDetails> contacts = gson.fromJson(json, new TypeToken<List<ContactDetails>>(){}.getType());
         return contacts.stream()
             .map((g) -> new Object[] {g})
             .collect(Collectors.toList()).iterator();
     }
 
-    @Test(dataProvider = "validContactsFromXml")
+    @Test(dataProvider = "validContactsFromJson")
     public void testCreationNewContact(ContactDetails contact) {
         Contacts before = app.contact().all();
         //File photo = new File("src/test/java/resources/tt.png");

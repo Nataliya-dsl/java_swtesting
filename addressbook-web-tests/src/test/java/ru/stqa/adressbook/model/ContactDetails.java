@@ -16,7 +16,6 @@ public class ContactDetails {
     private String middlename;
     @Expose
     private String lastname;
-    @Expose
     private String nickname;
     private String company;
     @Expose
