@@ -25,6 +25,7 @@ public class ContactDetails {
     private String mobile;
     @Expose
     private String workphone;
+    @Expose
     private String group;
     private String homephone;
     private String allPhones;

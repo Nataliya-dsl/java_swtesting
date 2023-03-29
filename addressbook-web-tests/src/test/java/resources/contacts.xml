@@ -11,6 +11,7 @@
 0;</mobile>
     <workphone>2222
 0;</workphone>
+    <group>test 1;</group>
   </contact>
   <contact>
     <firstname>FirstName 1;</firstname>
@@ -24,6 +25,7 @@
 1;</mobile>
     <workphone>2222
 1;</workphone>
+    <group>test 1;</group>
   </contact>
   <contact>
     <firstname>FirstName 2;</firstname>
@@ -37,6 +39,7 @@
 2;</mobile>
     <workphone>2222
 2;</workphone>
+    <group>test 1;</group>
   </contact>
   <contact>
     <firstname>FirstName 3;</firstname>
@@ -50,5 +53,6 @@
 3;</mobile>
     <workphone>2222
 3;</workphone>
+    <group>test 1;</group>
   </contact>
 </list>
