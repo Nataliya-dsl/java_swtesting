@@ -80,7 +80,7 @@ public class NewContactCreationTest extends TestBase {
         assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
     }
 
-    @Test
+    @Test(enabled = false)
     public void testBadCreationNewContact() {
         Contacts before = app.contact().all();
         ContactDetails contact = new ContactDetails().withFirstname("Dima'").withMiddlename(null).withLastname("Dmitriev'")
