@@ -7,7 +7,8 @@ import ru.stqa.adressbook.appmanager.ApplicationManager;
 
 public class TestBase {
 
-    protected static final ApplicationManager app = new ApplicationManager(Browser.CHROME.browserName());
+    protected static final ApplicationManager app = new ApplicationManager(System.getProperty("browser", Browser.CHROME.browserName()));
+    //(Browser.CHROME.browserName())
 
     @BeforeSuite
     public void setUp() throws Exception {
