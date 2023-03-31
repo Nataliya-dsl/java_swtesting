@@ -14,12 +14,11 @@ public class ContactInformationTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        app.goTo().homePage();
-        if (app.contact().all().size() == 0) {
-            app.contact().create(new ContactDetails().withFirstname("Test").withMiddlename(null).withLastname("Testov").withNickname(null)
-                    .withCompany("TestCompany").withAddress("Country1 ,City1, Street1, 1-1-1.")
-                    .withHomePhone("+45123456789").withMobile("+45123456789").withWorkphone("+987654321").withHomesecondaryphone("11111")
-                    .withEmail("test@test.ru").withEmail2("test2@test.ru").withEmail3("test3@test.ru").withGroup("test1"));
+        if (app.db().contacts().size() == 0) {
+            app.goTo().homePage();
+            app.contact().create(new ContactDetails().withFirstname("Petr").withMiddlename("Pavlovich").withLastname("Smirnov")
+                .withNickname("testuser").withCompany("TestCompany").withAddress("Country1,City1, Street1, 1-1-1").withMobile("+45123456789")
+                .withWorkphone("+987654321").withGroup("test1"));
         }
     }
     @Test

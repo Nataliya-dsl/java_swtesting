@@ -17,8 +17,6 @@ import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 public class NewContactCreationTest extends TestBase {
 
@@ -30,11 +28,15 @@ public class NewContactCreationTest extends TestBase {
         Optional<GroupData> group = app.group().all().stream()
                 .filter(g -> TEST_GROUP.equals(g.getName()))
                 .findFirst();
-
         if (group.isEmpty())
             app.group().create(new GroupData().withName(TEST_GROUP));
 
-        app.goTo().homePage();
+        if (app.db().contacts().size() == 0) {
+            app.goTo().homePage();
+            app.contact().create(new ContactDetails().withFirstname("Petr").withMiddlename("Pavlovich").withLastname("Smirnov")
+                .withNickname("testuser").withCompany("TestCompany").withAddress("Country1,City1, Street1, 1-1-1").withMobile("+45123456789")
+                .withWorkphone("+987654321").withGroup("test1"));
+        }
     }
     @DataProvider
     public Iterator<Object[]> validContactsFromXml() throws IOException {
@@ -72,22 +74,22 @@ public class NewContactCreationTest extends TestBase {
 
     @Test(dataProvider = "validContactsFromJson")
     public void testCreationNewContact(ContactDetails contact) {
-        Contacts before = app.contact().all();
-        //File photo = new File("src/test/java/resources/tt.png");
+        Contacts before = app.db().contacts();
+        //File photo = new File("src/test/resources/tt.png");
         app.contact().create(contact);
         assertThat(app.contact().count(), equalTo(before.size() + 1));
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
         assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
     }
 
     @Test(enabled = false)
     public void testBadCreationNewContact() {
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
         ContactDetails contact = new ContactDetails().withFirstname("Dima'").withMiddlename(null).withLastname("Dmitriev'")
                 .withNickname(null).withCompany(null).withAddress(null).withMobile(null).withWorkphone(null).withGroup("test1");
         app.contact().create(contact);
         assertThat(app.contact().count(), equalTo(before.size()));
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
         assertThat(after, equalTo(before));
     }
 

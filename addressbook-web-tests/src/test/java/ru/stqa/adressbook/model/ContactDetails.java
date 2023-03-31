@@ -1,5 +1,6 @@
 package ru.stqa.adressbook.model;
 
+import com.google.common.base.Strings;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -69,7 +70,7 @@ public class ContactDetails {
     }
 
     public File getPhoto() {
-        return new File(photo);
+        return (photo != null) ? new File(photo): null;
     }
 
     public ContactDetails withPhoto(File photo) {
@@ -107,11 +108,9 @@ public class ContactDetails {
         return this;
     }
 
-
     public String getAllEmails() {
         return allEmails;
     }
-
 
     public ContactDetails withAllEmails(String allEmails) {
         this.allEmails = allEmails;
@@ -231,22 +230,40 @@ public class ContactDetails {
         return id;
     }
 
+    public ContactDetails withId(int id) {
+        this.id = id;
+        return this;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactDetails that = (ContactDetails) o;
-        return id == that.id && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname);
+        return id == that.id &&
+            Objects.equals(nullify(firstname), nullify(that.firstname)) &&
+            Objects.equals(nullify(middlename), nullify(that.middlename)) &&
+            Objects.equals(nullify(lastname), nullify(that.lastname)) &&
+            Objects.equals(nullify(nickname), nullify(that.nickname)) &&
+            Objects.equals(nullify(company), nullify(that.company)) &&
+            Objects.equals(nullify(address), nullify(that.address)) &&
+            Objects.equals(nullify(mobile), nullify(that.mobile)) &&
+            Objects.equals(nullify(workphone), nullify(that.workphone)) &&
+            Objects.equals(nullify(homephone), nullify(that.homephone)) &&
+            Objects.equals(nullify(email), nullify(that.email)) &&
+            Objects.equals(nullify(email2), nullify(that.email2)) &&
+            Objects.equals(nullify(email3), nullify(that.email3)) &&
+            Objects.equals(nullify(homesecondaryphone), nullify(that.homesecondaryphone));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname);
+        return Objects.hash(id, firstname, middlename, lastname, nickname, company, address, mobile, workphone, homephone, email, email2, email3, homesecondaryphone);
     }
 
-    public ContactDetails withId(int id) {
-        this.id = id;
-        return this;
+    public String nullify(String value) {
+        return (Objects.equals(value, "null") || "".equals(value)) ? null : value;
     }
 
 }

@@ -1,44 +1,37 @@
 package ru.stqa.adressbook.tests;
 
-import org.hamcrest.MatcherAssert;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.adressbook.model.ContactDetails;
 import ru.stqa.adressbook.model.Contacts;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class ContactModificationTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        app.goTo().homePage();
-        if (app.contact().all().size() == 0) {
+        if (app.db().contacts().size() == 0) {
+            app.goTo().homePage();
             app.contact().create(new ContactDetails().withFirstname("Petr").withMiddlename("Pavlovich").withLastname("Smirnov")
                     .withNickname("testuser").withCompany("TestCompany").withAddress("Country1,City1, Street1, 1-1-1").withMobile("+45123456789")
                     .withWorkphone("+987654321").withGroup("test1"));
         }
     }
 
-
     @Test
     public void testContactModification() {
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
         ContactDetails modifiedContact = before.iterator().next();
         ContactDetails contact = new ContactDetails().withId(modifiedContact.getId()).withFirstname("Test").withMiddlename("Test")
                 .withLastname("Test").withNickname("testuser").withCompany("TestCompany").withAddress("Country, City, Street, 0")
-                .withMobile("+45123456789").withWorkphone("+987654321").withGroup(null);
-
+                .withMobile("+45123456789").withWorkphone("+987654321").withGroup(null).withHomePhone(null);
+        app.goTo().homePage();
         app.contact().modify(contact);
         assertThat(app.contact().count(), equalTo(before.size()));
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
         assertThat(after, equalTo(before.withOut(modifiedContact).withAdded(contact)));
     }
-
 }
