@@ -38,8 +38,7 @@ public class HbConnectionTest {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<ContactDetails> result = session.createQuery( "from ContactDetails as t where t.deprecated = '0000-00-00 00:00:00'").list();
-        //List<ContactDetails> result = session.createNativeQuery(
-        //    "select * from addressbook as t where t.deprecated = '0000-00-00 00:00:00'",ContactDetails.class).list();
+        //List<ContactDetails> result = session.createNativeQuery("select * from addressbook as t where t.deprecated = '0000-00-00 00:00:00'",ContactDetails.class).list();
         for ( ContactDetails contacts : result ) {
             System.out.println(contacts);
         }
