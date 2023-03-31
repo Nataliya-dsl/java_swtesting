@@ -3,45 +3,99 @@ package ru.stqa.adressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import jakarta.persistence.*;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @XStreamAlias("contact")
+@Entity
+@Table(name = "addressbook")
 public class ContactDetails {
     @XStreamOmitField
+    @Id
+    @Column(name = "id")
     private int id = Integer.MAX_VALUE;
     @Expose
+    @Column(name = "firstname")
     private String firstname;
+    @Column(name = "middlename")
     private String middlename;
     @Expose
+    @Column(name = "lastname")
     private String lastname;
+    @Column(name = "nickname")
     private String nickname;
+    @Column(name = "company")
     private String company;
     @Expose
+    @Column(name = "address")
     private String address;
     @Expose
+    @Column(name = "mobile")
     private String mobile;
     @Expose
+    @Column(name = "work")
     private String workphone;
     @Expose
+    @Transient
     private String group;
+    @Column(name = "home")
     private String homephone;
+    @Transient
     private String allPhones;
+    @Column(name = "email")
     private String email;
+    @Column(name = "email2")
     private String email2;
+    @Column(name = "email3")
     private String email3;
+    @Transient
     private String allEmails;
+    @Column(name = "phone2")
     private String homesecondaryphone;
-    private File photo;
+    @Column(name = "photo")
+    private String photo;
+
+    private LocalDateTime deprecated;
+
+    public LocalDateTime getDeprecated() {
+        return deprecated;
+    }
+
+    public void setDeprecated(LocalDateTime deprecated) {
+        this.deprecated = deprecated;
+    }
 
     public File getPhoto() {
-        return photo;
+        return new File(photo);
     }
 
     public ContactDetails withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ContactDetails{" +
+            "id=" + id +
+            ", firstname='" + firstname + '\'' +
+            ", middlename='" + middlename + '\'' +
+            ", lastname='" + lastname + '\'' +
+            ", nickname='" + nickname + '\'' +
+            ", company='" + company + '\'' +
+            ", address='" + address + '\'' +
+            ", mobile='" + mobile + '\'' +
+            ", workphone='" + workphone + '\'' +
+            ", homephone='" + homephone + '\'' +
+            ", email='" + email + '\'' +
+            ", email2='" + email2 + '\'' +
+            ", email3='" + email3 + '\'' +
+            ", homesecondaryphone='" + homesecondaryphone + '\'' +
+            ", photo='" + photo + '\'' +
+            '}';
     }
 
     public String getAllPhones() {
@@ -175,15 +229,6 @@ public class ContactDetails {
 
     public int getId() {
         return id;
-    }
-
-    @Override
-    public String toString() {
-        return "ContactDetails{" +
-                "id='" + id + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                '}';
     }
 
     @Override
