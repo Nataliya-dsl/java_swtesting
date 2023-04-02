@@ -24,12 +24,10 @@ public class NewContactCreationTest extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        app.goTo().groupPage();
-        Optional<GroupData> group = app.group().all().stream()
-                .filter(g -> TEST_GROUP.equals(g.getName()))
-                .findFirst();
-        if (group.isEmpty())
-            app.group().create(new GroupData().withName(TEST_GROUP));
+        if (app.db().groups().size() == 0) {
+            app.goTo().groupPage();
+            app.group().create(new GroupData().withName("test1"));
+        }
 
         if (app.db().contacts().size() == 0) {
             app.goTo().homePage();
