@@ -20,7 +20,7 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("(//input[@name=\'submit\'])[2]"));
     }
 
-    public void fillContactDetails(ContactDetails contactDetails, boolean creation) {
+    public void fillContactDetails(ContactDetails contactDetails) {
         type(By.name("firstname"), contactDetails.getFirstname());
         type(By.name("middlename"), contactDetails.getMiddlename());
         type(By.name("lastname"), contactDetails.getLastname());
@@ -31,11 +31,11 @@ public class ContactHelper extends HelperBase {
         type(By.name("work"), contactDetails.getWorkPhone());
         attach(By.name("photo"), contactDetails.getPhoto());
 
-        if (creation) {
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactDetails.getGroup());
-        } else {
-            Assert.assertFalse(isElementPresent(By.name("new_group")));
-        }
+//        if (creation) {
+//            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactDetails.getGroup());
+//        } else {
+//            Assert.assertFalse(isElementPresent(By.name("new_group")));
+//        }
     }
 
     public void addNewContact() {
@@ -68,7 +68,7 @@ public class ContactHelper extends HelperBase {
 
     public void create(ContactDetails contact) {
         addNewContact();
-        fillContactDetails(contact, true);
+        fillContactDetails(contact);
         submitContactCreation();
         contactCache = null;
         returnHomePage();
@@ -76,7 +76,7 @@ public class ContactHelper extends HelperBase {
 
     public void modify(ContactDetails contact) {
         editContactById(contact.getId());
-        fillContactDetails(contact,false);
+        fillContactDetails(contact);
         submitContactModification();
         contactCache = null;
         returnHomePage();
@@ -114,7 +114,7 @@ public class ContactHelper extends HelperBase {
             String allEmails = cells.get(4).getText();
             ContactDetails contact = new ContactDetails().withId(id).withFirstname(firstname).withMiddlename(null).withLastname(lastname)
                     .withNickname(null).withCompany(null).withAddress(address)
-                    .withAllPhones(allPhones).withAllEmails(allEmails).withGroup(null);
+                    .withAllPhones(allPhones).withAllEmails(allEmails);
             contactCache.add(contact);
         }
         return new Contacts(contactCache);
