@@ -8,6 +8,7 @@ import org.testng.annotations.*;
 import ru.stqa.adressbook.model.ContactDetails;
 import ru.stqa.adressbook.model.Contacts;
 import ru.stqa.adressbook.model.GroupData;
+import ru.stqa.adressbook.model.Groups;
 
 import java.io.*;
 import java.util.Iterator;
@@ -33,7 +34,7 @@ public class NewContactCreationTest extends TestBase {
             app.goTo().homePage();
             app.contact().create(new ContactDetails().withFirstname("Petr").withMiddlename("Pavlovich").withLastname("Smirnov")
                 .withNickname("testuser").withCompany("TestCompany").withAddress("Country1,City1, Street1, 1-1-1").withMobile("+45123456789")
-                .withWorkphone("+987654321").withGroup("test1"));
+                .withWorkphone("+987654321"));//.withGroup("test1"));
         }
     }
     @DataProvider
@@ -78,13 +79,16 @@ public class NewContactCreationTest extends TestBase {
         assertThat(app.contact().count(), equalTo(before.size() + 1));
         Contacts after = app.db().contacts();
         assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
+        verifyContactListInUI();
     }
+
+
 
     @Test(enabled = false)
     public void testBadCreationNewContact() {
         Contacts before = app.db().contacts();
         ContactDetails contact = new ContactDetails().withFirstname("Dima'").withMiddlename(null).withLastname("Dmitriev'")
-                .withNickname(null).withCompany(null).withAddress(null).withMobile(null).withWorkphone(null).withGroup("test1");
+                .withNickname(null).withCompany(null).withAddress(null).withMobile(null).withWorkphone(null);
         app.contact().create(contact);
         assertThat(app.contact().count(), equalTo(before.size()));
         Contacts after = app.db().contacts();
