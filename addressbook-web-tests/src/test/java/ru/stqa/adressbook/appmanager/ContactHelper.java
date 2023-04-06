@@ -88,6 +88,24 @@ public class ContactHelper extends HelperBase {
         confirmationDeleteContact();
         contactCache = null;
     }
+
+
+    public void addContactToGroup(ContactDetails contact) {
+        selectContactById(contact.getId());
+        new Select(wd.findElement(By.name("to_group"))).selectByIndex(0);
+        click(By.name("add"));
+        contactCache = null;
+    }
+
+    public String deletedContactFromGroup(ContactDetails contact) {
+        Select group = new Select(wd.findElement(By.name("group")));
+        String groupId = group.getOptions().get(2).getAttribute("value");
+        group.selectByIndex(2);
+        selectContactById(contact.getId());
+        click(By.name("remove"));
+        contactCache = null;
+        return groupId;
+    }
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
     }
@@ -142,6 +160,5 @@ public class ContactHelper extends HelperBase {
     private void initContactModificationById(int id) {
         wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
     }
-
 
 }
