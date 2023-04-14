@@ -6,6 +6,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.adressbook.model.ContactDetails;
 import ru.stqa.adressbook.model.Contacts;
+import ru.stqa.adressbook.model.GroupData;
 
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,10 @@ public class ContactDeletionTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
+        if (app.db().groups().size() == 0) {
+            app.goTo().groupPage();
+            app.group().create(new GroupData().withName("test1"));}
+
         if (app.db().contacts().size() == 0) {
             app.goTo().homePage();
             app.contact().create(new ContactDetails().withFirstname("Petr").withMiddlename("Pavlovich").withLastname("Smirnov")
