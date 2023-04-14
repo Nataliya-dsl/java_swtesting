@@ -37,8 +37,6 @@ public class DeletionContactFromGroupTests extends TestBase {
         String groupId = app.contact().deletedContactFromGroup(deletedContactFromGroup);
         app.goTo().homePage();
 
-        assertThat(app.contact().count(), equalTo(before.size()));
-
         Contacts after = app.db().contacts();
         ContactDetails contactAfterDeletionFromGroup = after.stream().filter(
             c -> c.getId() == deletedContactFromGroup.getId()

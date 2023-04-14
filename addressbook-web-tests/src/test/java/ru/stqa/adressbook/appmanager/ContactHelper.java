@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
 import ru.stqa.adressbook.model.ContactDetails;
 import ru.stqa.adressbook.model.Contacts;
 
@@ -90,11 +89,14 @@ public class ContactHelper extends HelperBase {
     }
 
 
-    public void addContactToGroup(ContactDetails contact) {
+    public String addContactToGroup(ContactDetails contact) {
         selectContactById(contact.getId());
-        new Select(wd.findElement(By.name("to_group"))).selectByIndex(0);
+        Select group = new Select(wd.findElement(By.name("to_group"))); //.selectByIndex(0);
+        String groupId = group.getOptions().get(2).getAttribute("value");
+
         click(By.name("add"));
         contactCache = null;
+        return groupId;
     }
 
     public String deletedContactFromGroup(ContactDetails contact) {
