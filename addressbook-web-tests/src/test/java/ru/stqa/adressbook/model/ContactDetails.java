@@ -177,6 +177,14 @@ public class ContactDetails {
         return this;
     }
 
+    public ContactDetails withGroup(String group) {
+        GroupData groupData = new GroupData().withName(group);
+        this.groups.add(groupData);
+        return this;
+    }
+
+
+
     public ContactDetails withHomesecondaryphone(String homesecondaryphone) {
         this.homesecondaryphone = homesecondaryphone;
         return this;

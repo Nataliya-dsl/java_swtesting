@@ -48,7 +48,7 @@ public class AddingContactToGroupTests extends TestBase {
         ).findFirst().orElseThrow();
 
         Assert.assertTrue(
-            contactAfterAddingToGroup.getGroups().stream().noneMatch(
+            contactAfterAddingToGroup.getGroups().stream().anyMatch(
                 g -> g.getId() == Integer.parseInt(groupId)
             )
         );
