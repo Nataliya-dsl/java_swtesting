@@ -7,7 +7,6 @@ import ru.stqa.mantis.model.MailMessage;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +17,7 @@ public class MailHelper {
     public MailHelper(ApplicationManager app) {
         this.app = app;
         this.wiser = new Wiser();
+        this.wiser.setHostname("localhost");
     }
 
     public List<MailMessage> waitForMail(int count, long timeout) {

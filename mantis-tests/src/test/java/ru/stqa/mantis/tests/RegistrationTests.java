@@ -19,21 +19,25 @@ public class RegistrationTests extends TestBase{
         app.mail().start();
     }
 
+
     @Test
     public void testRegistration() throws IOException {
         long now = System.currentTimeMillis();
         String user = "user" + now;
-        String password = "password2";
-        String email = String.format("user%s@localhost.localdomain", now);
+        String password = "password";
+        String email = String.format("user%s@localhost", now);
         app.registration().start(user, email);
-        List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
+        List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
         String confirmationLink = findConfirmationLink(mailMessages, email);
         app.registration().finish(confirmationLink, password);
         assertTrue(app.newSession().login(user, password));
     }
 
     private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
-        MailMessage mailMessage = mailMessages.stream().filter((m) -> m.equals(email)).findFirst().get();
+        MailMessage mailMessage = mailMessages.stream()
+            .filter((MailMessage m) -> m.to.equals(email))
+            .findFirst()
+            .get();
         VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
         return regex.getText(mailMessage.text);
     }
