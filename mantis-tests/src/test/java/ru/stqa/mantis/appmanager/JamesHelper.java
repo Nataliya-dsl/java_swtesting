@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.SocketException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -135,7 +137,10 @@ public class JamesHelper {
 
     private static MailMessage toModelMail(Message m) {
         try {
-            return new MailMessage(m.getAllRecipients()[0].toString(), (String) m.getContent());
+            return new MailMessage(
+                m.getAllRecipients()[0].toString(),
+                (String) m.getContent()
+            );
         } catch (MessagingException e) {
             e.printStackTrace();
             return null;

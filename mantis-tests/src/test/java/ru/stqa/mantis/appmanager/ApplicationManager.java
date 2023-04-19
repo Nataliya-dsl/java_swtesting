@@ -22,6 +22,7 @@ public class ApplicationManager {
     private FtpHelper ftp;
     private MailHelper mailHelper;
     private JamesHelper jamesHelper;
+    private UserManagementHelper usermanagmentHelper;
 
     public ApplicationManager(String browser) {
         this.browser = browser;
@@ -50,6 +51,13 @@ public class ApplicationManager {
             registrationHelper = new RegistrationHelper(this);
         }
         return registrationHelper;
+    }
+
+    public UserManagementHelper usermanagment() {
+        if (usermanagmentHelper == null) {
+            usermanagmentHelper = new UserManagementHelper(this);
+        }
+        return usermanagmentHelper;
     }
 
     public FtpHelper ftp() {

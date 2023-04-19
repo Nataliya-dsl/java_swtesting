@@ -7,6 +7,7 @@ import ru.stqa.mantis.model.MailMessage;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +39,10 @@ public class MailHelper {
     public static MailMessage toModelMail(WiserMessage m) {
         try {
             MimeMessage mm = m.getMimeMessage();
-            return new MailMessage(mm.getAllRecipients()[0].toString(), (String) mm.getContent());
+            return new MailMessage(
+                mm.getAllRecipients()[0].toString(),
+                (String) mm.getContent()
+            );
         } catch (MessagingException e) {
             e.printStackTrace();
             return null;
