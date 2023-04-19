@@ -10,6 +10,7 @@ import ru.stqa.adressbook.model.GroupData;
 import ru.stqa.adressbook.model.Groups;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,35 +18,38 @@ import static org.testng.AssertJUnit.assertTrue;
 
 public class AddingContactToGroupTests extends TestBase {
 
-    @BeforeMethod
-    public void ensurePreconditions() {
-        if (app.db().groups().size() == 0) {
-            app.goTo().groupPage();
-            app.group().create(new GroupData().withName("test1"));
-        }
 
-        if (app.db().contacts().size() == 0) {
-            app.goTo().homePage();
-            app.contact().create(new ContactDetails().withFirstname("Petr").withMiddlename("Pavlovich").withLastname("Smirnov")
-                .withNickname("testuser").withCompany("TestCompany").withAddress("Country1,City1, Street1, 1-1-1").withMobile("+45123456789")
-                .withWorkphone("+987654321"));
-        }
+    public GroupContact ensurePreconditions() {
+        String groupName = "test" + UUID.randomUUID();
+        app.goTo().groupPage();
+        app.group().create(new GroupData().withName(groupName));
+
+        String firstname = "Petr" + UUID.randomUUID();
+        app.goTo().homePage();
+
+        app.contact().create(new ContactDetails().withFirstname(firstname).withMiddlename("Pavlovich").withLastname("Smirnov")
+            .withNickname("testuser").withCompany("TestCompany").withAddress("Country1,City1, Street1, 1-1-1").withMobile("+45123456789")
+            .withWorkphone("+987654321"));
+        return new GroupContact(groupName, firstname);
     }
 
     @Test
     public void testAddingContactToGroup() {
-        Contacts contactsBefore = app.db().contacts();
-        ContactDetails addingContactToGroup = contactsBefore.iterator().next();
+        GroupContact groupContact = ensurePreconditions();
 
-        app.goTo().homePage();
-        String groupId = app.contact().addContactToGroup(addingContactToGroup);
-        app.goTo().homePage();
-
-        Contacts contactsAfter = app.db().contacts();
-
-        ContactDetails contactAfterAddingToGroup = contactsAfter.stream().filter(
-            c -> c.getId() == addingContactToGroup.getId()
+        ContactDetails contactsBefore = app.db().contacts().stream().filter(
+            it -> it.getFirstname().equals(groupContact.contactName)
         ).findFirst().orElseThrow();
+
+        app.goTo().homePage();
+        String groupId = app.contact().addContactToGroup(contactsBefore, groupContact.groupName);
+
+        ContactDetails contactAfterAddingToGroup = app.db().contacts().stream()
+            .filter(
+                it -> it.getFirstname().equals(groupContact.contactName)
+            )
+            .findFirst()
+            .orElseThrow();
 
         Assert.assertTrue(
             contactAfterAddingToGroup.getGroups().stream().anyMatch(
@@ -54,6 +58,24 @@ public class AddingContactToGroupTests extends TestBase {
         );
 
         verifyContactListInUI();
+    }
+
+    class GroupContact {
+        private final String groupName;
+        private final String contactName;
+
+        public GroupContact(String groupName, String contactName) {
+            this.groupName = groupName;
+            this.contactName = contactName;
+        }
+
+        public String getGroupName() {
+            return groupName;
+        }
+
+        public String getContactName() {
+            return contactName;
+        }
     }
 
 }

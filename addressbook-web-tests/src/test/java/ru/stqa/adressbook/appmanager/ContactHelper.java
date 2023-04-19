@@ -96,11 +96,16 @@ public class ContactHelper extends HelperBase {
     }
 
 
-    public String addContactToGroup(ContactDetails contact) {
+    public String addContactToGroup(ContactDetails contact, String groupName) {
         selectContactById(contact.getId());
         Select group = new Select(wd.findElement(By.name("to_group"))); //.selectByIndex(0);
-        String groupId = group.getOptions().get(0).getAttribute("value");
+        String groupId = group.getOptions().stream()
+            .filter(it -> it.getText().equals(groupName))
+            .findFirst()
+            .orElseThrow()
+            .getAttribute("value");
 
+        group.selectByVisibleText(groupName);
         click(By.name("add"));
         contactCache = null;
         return groupId;
