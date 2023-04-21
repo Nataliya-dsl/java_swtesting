@@ -7,6 +7,8 @@ public class Issue {
     private String summary;
     private String description;
 
+    private int state;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -34,6 +36,10 @@ public class Issue {
 
     public int getId() {
         return id;
+    }
+
+    public int getState() {
+        return state;
     }
 
     public Issue withId(int id) {
@@ -67,4 +73,11 @@ public class Issue {
         this.project = project;
         return this;
     }
+
+    public Issue withStatus(int status) {
+        this.state = status;
+        return this;
+    }
+
+
 }

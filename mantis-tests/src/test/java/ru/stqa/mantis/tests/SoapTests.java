@@ -35,7 +35,7 @@ public class SoapTests extends TestBase{
     @Test
     public void shouldSkipIfNotFixed() throws MalformedURLException, ServiceException, RemoteException {
         Issue newIssue = createIssue().created;
-        assertThrows(SkipException.class, () -> skipIfNotFixed(newIssue.getId()));
+        assertThrows(SkipException.class, () -> skipIfNotFixed(newIssue.getState()));
     }
 
     private Result createIssue() throws MalformedURLException, ServiceException, RemoteException {
@@ -54,4 +54,11 @@ public class SoapTests extends TestBase{
 
     private record Result(Issue issue, Issue created) {
     }
+
+    public void skipIfNotFixed(int status) {
+        if (status != 80) {
+            throw new SkipException("Status is 80");
+        }
+    }
+
 }

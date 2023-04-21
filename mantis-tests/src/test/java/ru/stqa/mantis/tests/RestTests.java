@@ -5,23 +5,19 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import io.restassured.RestAssured;
-import org.apache.http.client.fluent.Executor;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.message.BasicNameValuePair;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.stqa.mantis.model.Issue;
 
+import javax.xml.rpc.ServiceException;
 import java.io.IOException;
 import java.util.Set;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.equalTo;
+import static org.testng.Assert.assertThrows;
 import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertTrue;
 
-public class RestTests {
+public class RestTests extends TestBase {
 
     @BeforeClass
     public void init(){
@@ -37,12 +33,29 @@ public class RestTests {
         assertEquals(newIssues, oldIssues);
     }
 
+    @Test
+    public void shouldSkipIfNotFixed() throws IOException, ServiceException {
+        Issue newIssue = new Issue().withSubject("Test issue2").withDescription("New test issue");
+        int issueId = createIssue(newIssue);
+        Issue newIssueFilled = getIssue(issueId);
+        assertThrows(SkipException.class, () -> skipIfNotFixed(newIssueFilled.getState()));
+    }
+
     private Set<Issue> getIssues() throws IOException {
         String json = RestAssured.get("https://bugify.stqa.ru/api/issues.json?limit=900").asString();
         JsonElement parsed = new JsonParser().parse(json);
         JsonElement issues = parsed.getAsJsonObject().get("issues");
         return new Gson().fromJson(issues, new TypeToken<Set<Issue>>(){}.getType());
     }
+
+    private Issue getIssue(int issueId) throws IOException {
+        String json = RestAssured.get("https://bugify.stqa.ru/api/issues/" + issueId + ".json").asString();
+        JsonElement parsed = new JsonParser().parse(json);
+        JsonElement issues = parsed.getAsJsonObject().get("issues");
+        Set<Issue> issuesParsed = new Gson().fromJson(issues, new TypeToken<Set<Issue>>(){}.getType());
+        return issuesParsed.stream().findFirst().orElseThrow();
+    }
+
 
     private int createIssue(Issue newIssue) throws IOException {
         String json = RestAssured.given()
@@ -52,6 +65,13 @@ public class RestTests {
         JsonElement parsed = new JsonParser().parse(json);
         return parsed.getAsJsonObject().get("issue_id").getAsInt();
     }
+
+    public void skipIfNotFixed(int status) {
+        if (status < 2) {
+            throw new SkipException("Status is 2");
+        }
+    }
+
 
 
 }

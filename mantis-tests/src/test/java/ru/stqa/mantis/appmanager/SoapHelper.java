@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 
 public class SoapHelper {
 
-    private ApplicationManager app;
-    public SoapHelper(ApplicationManager applicationManager) {
+    private final ApplicationManager app;
+    public SoapHelper(ApplicationManager app) {
         this.app = app;
     }
 
@@ -44,16 +44,23 @@ public class SoapHelper {
         issueData.setCategory(categories[0]);
         BigInteger issueId = mc.mc_issue_add("administrator", "root", issueData);
         IssueData createdIssueData = mc.mc_issue_get("administrator", "root", issueId);
-        return new Issue().withId(createdIssueData.getId().intValue())
-            .withSummary(createdIssueData.getSummary())
-            .withDescription(createdIssueData.getDescription())
-            .withProject(new Project().withId(createdIssueData.getId().intValue())
-                                    .withName(createdIssueData.getProject().getName()));
+        return mapIssue(createdIssueData);
 
     }
 
-    public IssueData getIssue(BigInteger issueId) throws MalformedURLException, ServiceException, RemoteException {
+    private Issue mapIssue(IssueData issueData) {
+        return new Issue().withId(issueData.getId().intValue())
+            .withSummary(issueData.getSummary())
+            .withDescription(issueData.getDescription())
+            .withProject(new Project().withId(issueData.getId().intValue())
+                .withName(issueData.getProject().getName()))
+            .withStatus(issueData.getStatus().getId().intValue());
+
+    }
+
+    public Issue getIssue(BigInteger issueId) throws MalformedURLException, ServiceException, RemoteException {
         MantisConnectPortType mc = getMantisConnect();
-        return  mc.mc_issue_get("administrator", "root", issueId);
+        IssueData issueData = mc.mc_issue_get("administrator", "root", issueId);
+        return mapIssue(issueData);
     }
 }

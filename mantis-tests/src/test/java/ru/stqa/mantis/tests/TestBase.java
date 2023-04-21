@@ -32,19 +32,5 @@ public class TestBase {
         app.stop();
     }
 
-    public boolean isIssueOpen(int issueId) {
-        try {
-            ObjectRef status = app.soap().getIssue(BigInteger.valueOf(issueId)).getStatus();
-            return status.getId().intValue() != 80;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void skipIfNotFixed(int issueId) {
-        if (isIssueOpen(issueId)) {
-            throw new SkipException("Ignored because of issue " + issueId);
-        }
-    }
 
 }
