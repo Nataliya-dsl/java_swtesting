@@ -1,10 +1,36 @@
 package ru.stqa.mantis.model;
 
+import java.util.Objects;
+
 public class Issue {
     private int id;
     private String summary;
     private String description;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Issue issue = (Issue) o;
+        return id == issue.id && Objects.equals(description, issue.description) && Objects.equals(subject, issue.subject);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, description, subject);
+    }
+
     private Project project;
+    private String subject;
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public Issue withSubject(String subject) {
+        this.subject = subject;
+        return this;
+    }
 
     public int getId() {
         return id;
