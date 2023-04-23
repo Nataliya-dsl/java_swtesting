@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.Set;
 
 import static org.testng.Assert.assertThrows;
+import static org.testng.Assert.assertTrue;
 import static org.testng.AssertJUnit.assertEquals;
 
 public class RestTests extends TestBase {
@@ -37,8 +38,7 @@ public class RestTests extends TestBase {
     public void shouldSkipIfNotFixed() throws IOException, ServiceException {
         Issue newIssue = new Issue().withSubject("Test issue2").withDescription("New test issue");
         int issueId = createIssue(newIssue);
-        Issue newIssueFilled = getIssue(issueId);
-        assertThrows(SkipException.class, () -> skipIfNotFixed(newIssueFilled.getState()));
+        assertTrue(isIssueOpen(issueId));
     }
 
     private Set<Issue> getIssues() throws IOException {
@@ -48,15 +48,6 @@ public class RestTests extends TestBase {
         return new Gson().fromJson(issues, new TypeToken<Set<Issue>>(){}.getType());
     }
 
-    private Issue getIssue(int issueId) throws IOException {
-        String json = RestAssured.get("https://bugify.stqa.ru/api/issues/" + issueId + ".json").asString();
-        JsonElement parsed = new JsonParser().parse(json);
-        JsonElement issues = parsed.getAsJsonObject().get("issues");
-        Set<Issue> issuesParsed = new Gson().fromJson(issues, new TypeToken<Set<Issue>>(){}.getType());
-        return issuesParsed.stream().findFirst().orElseThrow();
-    }
-
-
     private int createIssue(Issue newIssue) throws IOException {
         String json = RestAssured.given()
                 .param("subject", newIssue.getSubject())
@@ -65,13 +56,6 @@ public class RestTests extends TestBase {
         JsonElement parsed = new JsonParser().parse(json);
         return parsed.getAsJsonObject().get("issue_id").getAsInt();
     }
-
-    public void skipIfNotFixed(int status) {
-        if (status < 2) {
-            throw new SkipException("Status is 2");
-        }
-    }
-
 
 
 }
